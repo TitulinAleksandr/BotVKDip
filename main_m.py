@@ -47,10 +47,11 @@ for event in longpoll.listen(): #закинули "удочку"
             set_ps('2', 1) #функция изменяющая статус в базе по id персонажа (можно модифицировать для прямой работы с vk ip)
             set_ps('4', 4)
 
-            x = list_ps(0) #вывод списка людей с определенным статусом
+            stat = 0
+            x = list_ps(stat) #вывод списка людей с определенным статусом (0)
             for i in x:
-                print(f'pers id{i[0]}')
-                print(f'vk id{s_vkid(i[0])}')
+                print(f'status {stat} pers id{i[0]} vk id{s_vkid(i[0])}')
+
 
 
 
