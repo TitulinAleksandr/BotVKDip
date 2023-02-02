@@ -1,5 +1,5 @@
 from random import randrange
-from box.vk_ut import token
+from box.vk_ut import token # в vk_ut.py (папка box) лежит токен VK
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 import psycopg2
