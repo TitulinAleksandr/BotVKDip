@@ -20,10 +20,10 @@ longpoll = VkLongPoll(vk)
 def write_msg(user_id, message):
     vk.method('messages.send', {'user_id': user_id, 'message': message,  'random_id': randrange(10 ** 7),})
 
-for event in longpoll.listen():
+for event in longpoll.listen(): #закинули "удочку"
     if event.type == VkEventType.MESSAGE_NEW:
 
-        if event.to_me:
+        if event.to_me: # "клюнуло" - кто-то сделал запись в чате
             request = event.text
             print(f'{event.datetime}   id{event.user_id} : {request}') #время записи в чате +idvk +текст
             x = str(event.user_id)
