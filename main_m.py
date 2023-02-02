@@ -48,9 +48,9 @@ for event in longpoll.listen(): #закинули "удочку"
             set_ps('4', 4)
 
             stat = 0
-            x = list_ps(stat) #вывод списка людей с определенным статусом (0)
+            x = list_ps(stat) #вывод списка людей (vk id) с определенным статусом (0)
             for i in x:
-                print(f'status {stat} pers id {i[0]} vk id{s_vkid(i[0])}')
+                print(f'status {stat} vk id{i}')
 
 
 

@@ -105,7 +105,10 @@ def set_person_status(uid, status): # получает id персонажа - �
 
 def list_person_status(status): #получает код статуса - выводит список id персонажей
     r = session.query(Persons.id).filter(Persons.p_status == status).all()
-    print(f'id{r} status {status}')
     session.commit()
-    return r
+    rm = []
+    for i in r:
+        rm.append(search_vkid(i[0]))
+    print(f'id{rm} status {status}')
+    return rm
 
