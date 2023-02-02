@@ -34,7 +34,7 @@ class Persons(Db_cb):
 engine = create_engine("postgresql+psycopg2://postgres:openBD@localhost:5432/vk_cbot")
 
 # Db_cb.metadata.drop_all(engine) #удалить все таблицы
-Db_cb.metadata.create_all(engine) #создать все таблицы
+Db_cb.metadata.create_all(engine) #создать все таблицы, если их нет
 
 session = Session(bind=engine)
 
