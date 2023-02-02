@@ -38,7 +38,7 @@ Db_cb.metadata.create_all(engine) #создать все таблицы, есл�
 
 session = Session(bind=engine)
 
-def add_vkid(id): #добавить в vk id
+def add_vkid(id): #добавить новый vk id
     u = Vk_users(vk_id=id)
     session.add(u)
     session.commit()
