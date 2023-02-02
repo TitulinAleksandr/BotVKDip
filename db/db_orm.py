@@ -91,7 +91,7 @@ def search_count_persons(status): # получает код статуса от�
     session.commit()
     return r
 
-def set_person_status(uid, status): # получает id персонажа - меняет статус на нужный
+def set_person_status(uid, status): # получает id vk - меняет статус на нужный
     uid = search_id(uid)
     r = session.query(Persons.id).filter(Persons.user_id == uid).first()
     if r:
