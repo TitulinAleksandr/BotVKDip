@@ -1,8 +1,7 @@
 import psycopg2
-import sqlalchemy
+import sqlalchemy as sq
 from sqlalchemy import create_engine, MetaData, Table, Integer, String, \
     Column, DateTime, ForeignKey, Numeric
-import sqlalchemy as sq
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker, Session
 from datetime import datetime
 
@@ -37,21 +36,20 @@ engine = create_engine("postgresql+psycopg2://postgres:openBD@localhost:5432/vk_
 # Db_cb.metadata.drop_all(engine) #удалить все таблицы
 Db_cb.metadata.create_all(engine) #создать все таблицы
 
-#
 session = Session(bind=engine)
 
-def add_vkid(id):
+def add_vkid(id): #добавить в vk id
     u = Vk_users(vk_id=id)
     session.add(u)
     session.commit()
 
-def add_contacts(id, date):
+def add_contacts(id, date): #добавить дату/время чата и привязать к vk id
     id = search_id(id)
     u = Contacts(user_id=id, c_date=date)
     session.add(u)
     session.commit()
 
-def add_person(id, st):
+def add_person(id, st): #присвоить персонажу(кандидату) статус и привязать к vk id (принты потом уберу, пока они нужны для отладки)
     s = search_id(id)
     if not s:
         add_vkid(id)
@@ -67,33 +65,33 @@ def add_person(id, st):
         print("добавили персону в базу")
     else: print("персона уже в базе")
 
-def search_id(uid):
+def search_id(uid): # получает vk id возвращает ключ (id из таблицы vk id - FK для остальных таблиц)
     r = session.query(Vk_users.id).filter(Vk_users.vk_id == uid).first()
     session.commit()
     if r:
         r = r[0]
     return r
 
-def search_vkid(uid):
+def search_vkid(uid): # получает ключ (id из таблицы vk id - FK для остальных таблиц) возвращает vk id
     r = session.query(Vk_users.vk_id).filter(Vk_users.id == uid).first()
     session.commit()
     if r:
         r = r[0]
     return r
 
-def search_person(uid):
+def search_person(uid): # получает ключ (id из таблицы vk id - FK для остальных таблиц) возвращает id таблицы персонажей/кандидатов
     r = session.query(Persons.id).filter(Persons.user_id == uid).first()
     session.commit()
     if r:
         r = r[0]
     return r
 
-def search_count_persons(status):
+def search_count_persons(status): # получает код статуса отдает количество соответствий
     r = session.query(Persons.id).filter(Persons.p_status == status).count()
     session.commit()
     return r
 
-def set_person_status(uid, status):
+def set_person_status(uid, status): # получает id персонажа - меняет статус на нужный
     r = session.query(Persons.id).filter(Persons.user_id == uid).first()
     if r:
         r = r[0]
@@ -105,7 +103,7 @@ def set_person_status(uid, status):
     session.add(i)
     session.commit()
 
-def list_person_status(status):
+def list_person_status(status): #получает код статуса - выводит список id персонажей
     r = session.query(Persons.id).filter(Persons.p_status == status).all()
     print(f'id{r} status {status}')
     session.commit()
