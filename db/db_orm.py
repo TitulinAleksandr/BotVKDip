@@ -33,7 +33,7 @@ class Persons(Db_cb):
 
 engine = create_engine("postgresql+psycopg2://postgres:openBD@localhost:5432/vk_cbot")
 
-# Db_cb.metadata.drop_all(engine) #удалить все таблицы
+Db_cb.metadata.drop_all(engine) #удалить все таблицы
 Db_cb.metadata.create_all(engine) #создать все таблицы, если их нет
 
 session = Session(bind=engine)
@@ -92,11 +92,11 @@ def search_count_persons(status): # получает код статуса от�
     return r
 
 def set_person_status(uid, status): # получает id vk - меняет статус на нужный
+    print(f'id{uid} set status {status}')
     uid = search_id(uid)
     r = session.query(Persons.id).filter(Persons.user_id == uid).first()
     if r:
         r = r[0]
-    print(f'id{r} set status {status}')
     # r = session.query(Persons.id).filter(Persons.user_id == uid).first()
     session.commit()
     i = session.query(Persons).get(r)
