@@ -55,9 +55,9 @@ if __name__ == '__main__':
                     print(f'status {stat} vk id{i}')
 
                 print('-----------')
+                for i in [1, 2, 3, 4]:
+                    idx = next(get_user_fromDB())
 
-                idx = next(get_user_fromDB(stat))
-                print(f'генератор {idx}')
 
 
 

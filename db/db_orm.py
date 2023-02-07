@@ -130,9 +130,12 @@ def list_person_status(status):  # получает код статуса - вы
     return rm
 
 
-def get_user_fromDB(status):
+def get_user_fromDB():
+    status = 0
     r = session.query(Persons.id).filter(Persons.p_status == status).all()
     session.commit()
+    print(r)
     for i in r:
         rr = search_vkid(i[0])
+        print(rr)
         yield rr
