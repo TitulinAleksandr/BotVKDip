@@ -9,7 +9,7 @@ from db.db_orm import \
     add_contacts as add_c,\
     add_person as add_p, \
     search_count_persons as s_st, \
-    set_person_status as set_ps, \
+    restatus as rs, \
     list_person_status as list_ps, \
     search_vkid as s_vkid
 from vk_tools.vk_tools import search_person as s_p
@@ -45,8 +45,8 @@ if __name__ == '__main__':
                 for i in [0,1,2,3,4]:
                     print(f'status {i}: {s_st(i)}') #вывод количества людей в базе с разными статусами(0-4)
 
-                set_ps('23456', 1) #функция изменяющая статус в базе по id vk
-                set_ps('76237', 4)
+                rs('23456', 1) #функция изменяющая статус в базе по id vk
+                rs('76237', 4)
 
                 stat = 0
                 x = list_ps(stat) #вывод списка людей (vk id) с определенным статусом (0)
