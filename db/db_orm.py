@@ -7,13 +7,11 @@ from datetime import datetime
 
 Db_cb = declarative_base()
 
-
 class Vk_users(Db_cb):
     __tablename__ = 'vk_users'
 
     id = sq.Column(sq.Integer, primary_key=True)
     vk_id = sq.Column(sq.String, unique=True)
-
 
 class Contacts(Db_cb):
     __tablename__ = 'contacts'
@@ -24,7 +22,6 @@ class Contacts(Db_cb):
 
     vk_user = relationship("Vk_users")
 
-
 class Persons(Db_cb):
     __tablename__ = 'persons'
 
@@ -34,7 +31,6 @@ class Persons(Db_cb):
 
     vk_user = relationship("Vk_users")
 
-
 engine = create_engine("postgresql+psycopg2://postgres:openBD@localhost:5432/vk_cbot")
 
 Db_cb.metadata.drop_all(engine)  # удалить все таблицы
@@ -42,19 +38,16 @@ Db_cb.metadata.create_all(engine)  # создать все таблицы, ес�
 
 session = Session(bind=engine)
 
-
 def add_vkid(id):  # добавить новый vk id
     u = Vk_users(vk_id=id)
     session.add(u)
     session.commit()
-
 
 def add_contacts(id, date):  # добавить дату/время чата и привязать к vk id
     id = search_id(id)
     u = Contacts(user_id=id, c_date=date)
     session.add(u)
     session.commit()
-
 
 def add_person(id,
                st):  # присвоить персонажу(кандидату) статус и привязать к vk id (принты потом уберу, пока они нужны для отладки)
@@ -74,7 +67,6 @@ def add_person(id,
     else:
         print("персона уже в базе")
 
-
 def search_id(uid):  # получает vk id возвращает ключ (id из таблицы vk id - FK для остальных таблиц)
     r = session.query(Vk_users.id).filter(Vk_users.vk_id == uid).first()
     session.commit()
@@ -82,14 +74,12 @@ def search_id(uid):  # получает vk id возвращает ключ (id 
         r = r[0]
     return r
 
-
 def search_vkid(uid):  # получает ключ (id из таблицы vk id - FK для остальных таблиц) возвращает vk id
     r = session.query(Vk_users.vk_id).filter(Vk_users.id == uid).first()
     session.commit()
     if r:
         r = r[0]
     return r
-
 
 def search_person(
         uid):  # получает ключ (id из таблицы vk id - FK для остальных таблиц) возвращает id таблицы персонажей/кандидатов
@@ -99,12 +89,10 @@ def search_person(
         r = r[0]
     return r
 
-
 def search_count_persons(status):  # получает код статуса отдает количество соответствий
     r = session.query(Persons.id).filter(Persons.p_status == status).count()
     session.commit()
     return r
-
 
 def restatus(uid, status):  # получает id vk - меняет статус на нужный
     print(f'id{uid} set status {status}')
