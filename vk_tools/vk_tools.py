@@ -15,12 +15,13 @@ def users_DB(id, status_code): #add_persons() Функция добавляет 
 def get_user_fromDB(): #post_user() Функция возвращает id случайного (можно и не случайного) "персонажа"
     pass    # Условие, функция при последующем вызове возвращает нового пользователя с статусом 0
 # ____________________
-# м: ? есть функция list_person_status(status) - выводит список персонажей по запрошенному статусу  - from db.db_orm import list_person_status as list_ps
-# stat = 0
-# x = list_ps(stat)
-# for i in x:
-#     print(f'status {stat} vk id{i}')
-#  могу сделать итератор
+# м:
+# вот генератор:
+# get_user_fromDB(status) - выдает следующее значение из DB с соответствующим статусом
+# на всякий случай напоминаю синтаксис:
+# idx = next(get_user_fromDB(stat))
+# иначе выдаст <generator object ...>, а не значение
+# from db.db_orm import get_user_fromDB
 # ____________________
 def restatus(id, num_status): # Функция меняет у пользователя с переданным id статус код на указанный num_status
     pass

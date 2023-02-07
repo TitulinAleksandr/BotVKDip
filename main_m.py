@@ -11,7 +11,8 @@ from db.db_orm import \
     search_count_persons as s_st, \
     restatus as rs, \
     list_person_status as list_ps, \
-    search_vkid as s_vkid
+    search_vkid as s_vkid, \
+    get_user_fromDB
 from vk_tools.vk_tools import search_person as s_p
 
 if __name__ == '__main__':
@@ -52,6 +53,11 @@ if __name__ == '__main__':
                 x = list_ps(stat) #вывод списка людей (vk id) с определенным статусом (0)
                 for i in x:
                     print(f'status {stat} vk id{i}')
+
+                print('-----------')
+
+                idx = next(get_user_fromDB(stat))
+                print(f'генератор {idx}')
 
 
 
