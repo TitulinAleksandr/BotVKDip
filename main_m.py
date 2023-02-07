@@ -56,12 +56,9 @@ if __name__ == '__main__':
 
                 print('-----------')
                 zzz = get_user_fromDB(0)
-                print(next(zzz))
-                print(next(zzz))
-                print(next(zzz))
-                print(next(zzz))
-                print(next(zzz))
-                print(next(zzz))
+                for z in zzz:
+                    print(z)
+
 
 
 
