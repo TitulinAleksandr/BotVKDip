@@ -119,7 +119,6 @@ def restatus(uid, status):  # получает id vk - меняет статус
     session.add(i)
     session.commit()
 
-
 def list_person_status(status):  # получает код статуса - выводит список id персонажей
     r = session.query(Persons.id).filter(Persons.p_status == status).all()
     session.commit()
@@ -129,13 +128,8 @@ def list_person_status(status):  # получает код статуса - вы
     print(f'idx{rm} status: {status}')
     return rm
 
-
-def get_user_fromDB():
-    status = 0
+def get_user_fromDB(status):
     r = session.query(Persons.id).filter(Persons.p_status == status).all()
     session.commit()
-    print(r)
     for i in r:
-        rr = search_vkid(i[0])
-        print(rr)
-        yield rr
+        yield search_vkid(i[0])
