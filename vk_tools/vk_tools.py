@@ -10,12 +10,12 @@ def postDB_user(id, status_code: dict):  #add_user() Функция добавл
 def users_DB(id, status_code): #add_persons() Функция добавляет в БД найденных "персонажей"
     pass
 # ____________________
-# м: ok - add_person(id, st): #присваивает персонажу(кандидату) статус и привязывает к vk id таблице - from db.db_orm import add_person
+# м: ok - add_person(id, st): присваивает персонажу(кандидату) статус и привязывает к vk id таблице - from db.db_orm import add_person
 # ____________________
 def get_user_fromDB(): #post_user() Функция возвращает id случайного (можно и не случайного) "персонажа"
-    pass    # Условие, функция при последующем вызове возвращает нового пользователя с статусом 0
+    pass    # Условие, функция при последующем вызове возвращает нового пользователя со статусом 0
 # ____________________
-# м: ok
+# м: ok - from db.db_orm import get_user_fromDB
 # генератор:
 # get_user_fromDB(status) - выдает id из DB по статусу
 # [!] синтаксис генераторов:
