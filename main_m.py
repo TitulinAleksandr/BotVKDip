@@ -58,7 +58,10 @@ if __name__ == '__main__':
                 zzz = get_user_fromDB(0)
                 print(next(zzz))
                 print(next(zzz))
-                print(zzz)
+                print(next(zzz))
+                print(next(zzz))
+                print(next(zzz))
+                print(next(zzz))
 
 
 
