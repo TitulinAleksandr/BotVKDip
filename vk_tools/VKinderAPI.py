@@ -189,14 +189,17 @@ class VkBot(VKinderAPI): #Класс бота
                     count = 0 # Счетчик для демонстрации работоспособности
                     info_user = users[count]
 
-                    if msg == '/старт': #Запуск бота
+                    if msg == '/старт' or msg == 'старт': #Запуск бота
+                        keyboard = VkKeyboard(one_time=True)
+                        keyboard.add_button('Показать', VkKeyboardColor.POSITIVE)
+
                         self._sender(id, f'Привет, {firstName_User}!\nЯ бот для поиска людей по параметрам твоего профиля.\n'
                                          f'Вот что мы нашли:\n'
                                          f'- Твой город: {city}\n'
                                          f'- Твой пол: {self.select(var_sex=api.sex_user)}\n'
-                                         f'- Твоя дата рождения: {api.bdate_user}')
+                                         f'- Твоя дата рождения: {api.bdate_user}', keyboard=keyboard)
 
-                    if msg == '/показать' and self.log == False and info_user['status_code'] == 0: # Метка -------------------
+                    if (msg == '/показать' or msg == 'показать')and self.log == False and info_user['status_code'] == 0: # Метка -------------------
                         ##############################
                         #add_person(info_user['id'], 0) # Метка -------------------
                         ##############################
@@ -210,8 +213,26 @@ class VkBot(VKinderAPI): #Класс бота
                         self._send_photoMessage(info_user=info_user, id=id, photos=photos)
                         time.sleep(0.35)
                         self.log = True
+                        keyboard = VkKeyboard(one_time=False)
+                        button = ['История', 'Убрать', 'Добавить','Далее']
+                        button_color = [VkKeyboardColor.PRIMARY, VkKeyboardColor.NEGATIVE, VkKeyboardColor.SECONDARY,
+                                        VkKeyboardColor.POSITIVE]
 
-                    elif msg == '/далее' and self.log == True:
+                        for btn, btn_color in zip(button, button_color):
+                            keyboard.add_button(btn, btn_color)
+
+                        self._sender(id, 'Выберите дейтские', keyboard)
+
+                    elif (msg == '/далее' or msg == 'далее') and self.log == True:
+
+                        keyboard = VkKeyboard(one_time=False)
+                        button = ['История', 'Убрать', 'Добавить', 'Далее']
+                        button_color = [VkKeyboardColor.PRIMARY, VkKeyboardColor.NEGATIVE, VkKeyboardColor.SECONDARY,
+                                        VkKeyboardColor.POSITIVE]
+
+                        for btn, btn_color in zip(button, button_color):
+                            keyboard.add_button(btn, btn_color)
+
                         ##############################
                         #restatus(info_user['id'], 1) # Метка -------------------
                         ##############################
@@ -243,14 +264,38 @@ class VkBot(VKinderAPI): #Класс бота
                                 DB_user.append(info_user['id']) # Метка -------------------
                                 time.sleep(0.35)
 
-                    elif msg == '/убрать':
-                        pass
+                    elif msg == '/добавить' or msg == 'добавить':
+                        keyboard = VkKeyboard()
+                        button = ['История', 'Убрать', 'Далее']
+                        button_color = [VkKeyboardColor.PRIMARY, VkKeyboardColor.NEGATIVE, VkKeyboardColor.POSITIVE]
+
+                        for btn, btn_color in zip(button, button_color):
+                            keyboard.add_button(btn, btn_color)
+
+                        self._sender(id, 'Выберите действие', keyboard)
                         ############################
                         #restatus(info_user['id'], 2)
                         #############################
 
-                    elif msg == '/история':
-                        pass
+                    elif msg == '/убрать' or msg == 'убрать':
+                        keyboard = VkKeyboard()
+                        button = ['История', 'Добавить', 'Далее']
+                        button_color = [VkKeyboardColor.PRIMARY, VkKeyboardColor.SECONDARY, VkKeyboardColor.POSITIVE]
+
+                        for btn, btn_color in zip(button, button_color):
+                            keyboard.add_button(btn, btn_color)
+
+                        self._sender(id, 'Выберите дейтские', keyboard)
+                        ############################
+                        #restatus(info_user['id'], 2)
+                        #############################
+
+                    elif msg == '/история' or msg == 'история':
+                        keyboard = VkKeyboard(one_time=True)
+                        button = ['Далее']
+                        keyboard.add_button('Далее', VkKeyboardColor.POSITIVE)
+
+                        self._sender(id, 'Выберите дейтские', keyboard)
                         ##################
                         #get_user_fromDB(1)
                         ###################
