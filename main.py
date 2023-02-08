@@ -1,5 +1,5 @@
-from API.VKinderAPI import VKinderAPI as API
-from API.VKinderAPI import VkBot
+from vk_tools.VKinderAPI import VKinderAPI as API
+from vk_tools.VKinderAPI import VkBot
 from config import TOKEN_API, TOKEN_BOT
 from datetime import datetime
 
