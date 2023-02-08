@@ -183,15 +183,15 @@ class VkBot(VKinderAPI): #Класс бота
                     firstName_User = api.get_myself(id=id)
                     ## postDB_user(id, timeConnect) - 1 Метка функции записи пользователя бота в бд # Метка -------------------
 
-                    users = api._get_users()
-                    city = api.city_user['title']
-
-                    count = 0 # Счетчик для демонстрации работоспособности
-                    info_user = users[count]
-
                     if msg == '/старт' or msg == 'старт': #Запуск бота
                         keyboard = VkKeyboard(one_time=True)
                         keyboard.add_button('Показать', VkKeyboardColor.POSITIVE)
+
+                        users = api._get_users()
+                        city = api.city_user['title']
+
+                        count = 0  # Счетчик для демонстрации работоспособности
+                        info_user = users[count]
 
                         self._sender(id, f'Привет, {firstName_User}!\nЯ бот для поиска людей по параметрам твоего профиля.\n'
                                          f'Вот что мы нашли:\n'
