@@ -14,6 +14,8 @@ from db.db_orm import \
     search_vkid as s_vkid, \
     get_user_fromDB
 from vk_tools.vk_tools import search_person as s_p
+from vk_api.longpoll import VkLongPoll, VkEventType
+from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 
 if __name__ == '__main__':
     vk = vk_api.VkApi(token=token)
@@ -24,6 +26,12 @@ if __name__ == '__main__':
 
     for event in longpoll.listen(): #закинули "удочку"
         if event.type == VkEventType.MESSAGE_NEW:
+            msg = event.text.lower()
+            print(event.type)
+            if msg == '/старт' or msg == 'старт':  # Запуск бота
+                print('пуск клавиатуры')
+                keyboard = VkKeyboard(one_time=True)
+                keyboard.add_button('Показать', VkKeyboardColor.POSITIVE)
 
             if event.to_me: # "клюнуло" - кто-то сделал запись в чате
                 request = event.text

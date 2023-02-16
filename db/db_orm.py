@@ -32,10 +32,8 @@ class Persons(Db_cb):
     vk_user = relationship("Vk_users")
 
 engine = create_engine("postgresql+psycopg2://postgres:openBD@localhost:5432/vk_cbot")
-
 Db_cb.metadata.drop_all(engine)  # удалить все таблицы
 Db_cb.metadata.create_all(engine)  # создать все таблицы, если их нет
-
 session = Session(bind=engine)
 
 def add_vkid(id):  # добавить новый vk id
@@ -49,8 +47,7 @@ def add_contacts(id, date):  # добавить дату/время чата и 
     session.add(u)
     session.commit()
 
-def add_person(id,
-               st):  # присвоить персонажу(кандидату) статус и привязать к vk id (принты потом уберу, пока они нужны для отладки)
+def add_person(id, st):  # присвоить персонажу(кандидату) статус и привязать к vk id (принты потом уберу, пока они нужны для отладки)
     s = search_id(id)
     if not s:
         add_vkid(id)
