@@ -4,7 +4,7 @@ import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
 from vk_api.keyboard import VkKeyboard, VkKeyboardColor
 from config import TOKEN_API #Получание токенов VkAPI
-#from db.db_orm import *
+from db.db_orm import *
 from datetime import datetime
 
 user_status = {}
@@ -174,6 +174,7 @@ class VkBot(VKinderAPI): #Класс бота
                     msg = event.text.lower()
                     id = event.user_id
                     date = datetime.now()
+
                     ######################
                     #add_contacts(id, date) # Запись пользователя, первый контакт с ботом # Метка -------------------
                     ######################
@@ -191,13 +192,15 @@ class VkBot(VKinderAPI): #Класс бота
                         count = 0  # Счетчик для демонстрации работоспособности
                         info_user = users[count]
 
+                        add_contacts(id, date)
+
                         self._sender(id, f'Привет, {firstName_User}!\nЯ бот для поиска людей по параметрам твоего профиля.\n'
                                          f'Вот что мы нашли:\n'
                                          f'- Твой город: {city}\n'
                                          f'- Твой пол: {self.select(var_sex=api.sex_user)}\n'
                                          f'- Твоя дата рождения: {api.bdate_user}', keyboard=keyboard)
 
-                    if (msg == '/показать' or msg == 'показать')and self.log == False and info_user['status_code'] == 0: # Метка -------------------
+                    if (msg == '/показать' or msg == 'показать') and self.log == False and info_user['status_code'] == 0: # Метка -------------------
                         ##############################
                         #add_person(info_user['id'], 0) # Метка -------------------
                         ##############################
@@ -210,6 +213,7 @@ class VkBot(VKinderAPI): #Класс бота
 
                         self._send_photoMessage(info_user=info_user, id=id, photos=photos)
                         time.sleep(0.35)
+                        print(info_user)
                         self.log = True
                         keyboard = VkKeyboard(one_time=False)
                         button = ['История', 'Убрать', 'Добавить','Далее']
@@ -255,10 +259,8 @@ class VkBot(VKinderAPI): #Класс бота
                                 photos = api.get_photos(user=info_user)
                                 self._send_photoMessage(info_user=info_user, id=id, photos=photos)
                                 info_user['status_code'] = 1
-                                print(info_user)
-                                ##############################
-                                #add_person(info_user['id'], 1)
-                                ##############################
+                                add_person(info_user['id'], 0)
+
                                 DB_user.append(info_user['id']) # Метка -------------------
                                 time.sleep(0.35)
 
@@ -274,6 +276,7 @@ class VkBot(VKinderAPI): #Класс бота
                         ############################
                         #restatus(info_user['id'], 2)
                         #############################
+                        add_person(info_user['id'], 0)
 
                     elif msg == '/убрать' or msg == 'убрать':
                         keyboard = VkKeyboard()
@@ -284,6 +287,8 @@ class VkBot(VKinderAPI): #Класс бота
                             keyboard.add_button(btn, btn_color)
 
                         self._sender(id, 'Выберите дейтские', keyboard)
+
+                        restatus(info_user['id'], 2)
                         ############################
                         #restatus(info_user['id'], 2)
                         #############################
@@ -297,3 +302,4 @@ class VkBot(VKinderAPI): #Класс бота
                         ##################
                         #get_user_fromDB(1)
                         ###################
+                        list_person_status(0)
