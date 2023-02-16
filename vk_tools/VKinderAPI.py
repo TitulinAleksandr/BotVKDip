@@ -302,4 +302,4 @@ class VkBot(VKinderAPI): #Класс бота
                         ##################
                         #get_user_fromDB(1)
                         ###################
-                        list_person_status(0)
+                        print(list_person_status(0))
