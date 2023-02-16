@@ -41,12 +41,10 @@ class VKinderAPI:
         return int(self.date_now) - int(bd_user) - 1
 
     def _sex(self):
-        if self.sex_user == 0:
+        if self.sex_user == 0 or self.sex_user == 2:
             return 1
         elif self.sex_user == 1:
             return 0
-        else:
-            return 2
 
     def _get_users(self) -> dict: #Получение пользователей в соответствии с параметрами полученные в результате get_myself()
         url = 'https://api.vk.com/method/users.search'
@@ -77,7 +75,7 @@ class VKinderAPI:
         except KeyError:
             pass
 
-        return user_info #Получен 1000 пользователей в соответсвии с заданными параметрами
+        return user_info #Получение 1000 пользователей в соответсвии с заданными параметрами
                         #[{id_1: , 'first_name'_1: , 'last_name'_1: , 'bdate'_1: dd.mm.yyyy, 'status_code': },
                             #...
                         #, {id_n: , 'first_name'_n: , 'last_name'_n: , 'bdate'_n: dd.mm.yyyy, 'status_code': }]
@@ -221,7 +219,7 @@ class VkBot(VKinderAPI): #Класс бота
                         for btn, btn_color in zip(button, button_color):
                             keyboard.add_button(btn, btn_color)
 
-                        self._sender(id, 'Выберите дейтские', keyboard)
+                        self._sender(id, 'Выберите действие', keyboard)
 
                     elif (msg == '/далее' or msg == 'далее') and self.log == True:
 
